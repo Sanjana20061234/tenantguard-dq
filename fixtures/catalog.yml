@@ -1,0 +1,96 @@
+tables:
+  organisations:
+    business_keys:
+      - organisation_id
+    parents: []
+    tags: [core]
+
+  advisors:
+    business_keys:
+      - organisation_id
+      - advisor_id
+    parents:
+      organisations: organisation_id
+    tags: [core, staff]
+
+  clients:
+    business_keys:
+      - organisation_id
+      - client_id
+    parents:
+      organisations: organisation_id
+      advisors: advisor_id
+    tags: [core, customer]
+
+  accounts:
+    business_keys:
+      - organisation_id
+      - account_id
+    parents:
+      organisations: organisation_id
+      clients: client_id
+    tags: [core, customer, financial]
+
+  portfolios:
+    business_keys:
+      - organisation_id
+      - portfolio_id
+    parents:
+      organisations: organisation_id
+      accounts: account_id
+    tags: [core, financial]
+
+  securities:
+    business_keys:
+      - organisation_id
+      - security_id
+    parents:
+      organisations: organisation_id
+    tags: [reference]
+
+  holdings:
+    business_keys:
+      - organisation_id
+      - holding_id
+    parents:
+      organisations: organisation_id
+      portfolios: portfolio_id
+      securities: security_id
+    tags: [financial, reporting]
+
+  trades:
+    business_keys:
+      - organisation_id
+      - trade_id
+    parents:
+      organisations: organisation_id
+      portfolios: portfolio_id
+      securities: security_id
+    tags: [financial, transactional]
+
+  transactions:
+    business_keys:
+      - organisation_id
+      - transaction_id
+    parents:
+      organisations: organisation_id
+      accounts: account_id
+    tags: [financial, transactional]
+
+  fee_schedules:
+    business_keys:
+      - organisation_id
+      - fee_schedule_id
+    parents:
+      organisations: organisation_id
+      accounts: account_id
+    tags: [financial, config]
+
+  statements:
+    business_keys:
+      - organisation_id
+      - statement_id
+    parents:
+      organisations: organisation_id
+      accounts: account_id
+    tags: [reporting]

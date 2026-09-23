@@ -1,0 +1,33 @@
+[project]
+name = "tenantguard-dq"
+version = "0.1.0"
+description = "A Data Quality & Testing Framework"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.0",
+    "PyYAML",
+    "sqlglot",
+    "duckdb",
+    "clickhouse-connect",
+    "typer",
+    "rich",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "ruff",
+]
+
+[project.scripts]
+dq = "dq.cli:app"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.pytest.ini_options]
+markers = [
+    "integration: marks tests as integration (deselect with '-m \"not integration\"')",
+]
