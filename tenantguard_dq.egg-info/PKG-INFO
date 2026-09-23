@@ -1,0 +1,16 @@
+Metadata-Version: 2.4
+Name: tenantguard-dq
+Version: 0.1.0
+Summary: A Data Quality & Testing Framework
+Requires-Python: >=3.11
+Requires-Dist: pydantic>=2.0
+Requires-Dist: PyYAML
+Requires-Dist: sqlglot
+Requires-Dist: duckdb
+Requires-Dist: clickhouse-connect
+Requires-Dist: typer
+Requires-Dist: rich
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: pytest-cov; extra == "dev"
+Requires-Dist: ruff; extra == "dev"

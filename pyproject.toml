@@ -31,3 +31,6 @@ target-version = "py311"
 markers = [
     "integration: marks tests as integration (deselect with '-m \"not integration\"')",
 ]
+[tool.setuptools.packages.find]
+include = ["dq*", "fixtures*"]
+
