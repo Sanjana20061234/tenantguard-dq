@@ -1,7 +1,9 @@
+
 import clickhouse_connect
+
 from dq.adapters.base import DatabaseAdapter
 from dq.safesql import SafeQuery
-import os
+
 
 class ClickHouseAdapter(DatabaseAdapter):
     def __init__(self, host="localhost", port=8123, username="default", password=""):
@@ -19,7 +21,7 @@ class ClickHouseAdapter(DatabaseAdapter):
                 if row and len(row) > 0:
                     return int(row[0])
             return 0
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             raise RuntimeError(e.__class__.__name__)
 
     def list_tables(self) -> list[str]:

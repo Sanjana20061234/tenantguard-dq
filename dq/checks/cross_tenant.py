@@ -2,6 +2,7 @@ from dq.checks import BaseCheck, register_check
 from dq.safesql import verify_and_create
 from dq.schema import CrossTenantCheck
 
+
 @register_check("cross_tenant_check")
 class CrossTenantCheckImpl(BaseCheck):
     def build_sql(self, dialect: str):

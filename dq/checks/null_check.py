@@ -2,6 +2,7 @@ from dq.checks import BaseCheck, register_check
 from dq.safesql import verify_and_create
 from dq.schema import NullCheck
 
+
 @register_check("null_check")
 class NullCheckImpl(BaseCheck):
     def build_sql(self, dialect: str):

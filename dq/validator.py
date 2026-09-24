@@ -1,5 +1,7 @@
-from dq.discovery import discover_checks
 import sys
+
+from dq.discovery import discover_checks
+
 
 def validate_checks(checks_dir: str):
     """
@@ -16,6 +18,6 @@ def validate_checks(checks_dir: str):
                     raise ValueError(f"Duplicate check id found: {c.id}")
                 seen.add(c.id)
         # Assuming further detailed validation logic would be here
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - Broad catch for validation pipeline
         print(f"Validation Error: {e}")
         sys.exit(2)

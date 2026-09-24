@@ -1,8 +1,8 @@
-import pytest
 from dq.adapters.stub_adapter import StubAdapter
-from dq.schema import TableChecks
 from dq.discovery import discover_checks
 from dq.engine import run_checks
+from dq.schema import TableChecks
+
 
 def test_discovery_empty(tmp_path):
     checks = discover_checks(tmp_path)

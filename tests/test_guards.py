@@ -1,6 +1,7 @@
-import pytest
-from dq.guards import generate_guards
 import yaml
+
+from dq.guards import generate_guards
+
 
 def test_generate_guards(tmp_path):
     catalog = tmp_path / "catalog.yml"

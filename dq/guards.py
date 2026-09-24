@@ -1,6 +1,9 @@
-import yaml
 from pathlib import Path
+
+import yaml
+
 from dq.schema import TableChecks
+
 
 def generate_guards(catalog_path: str | Path, output_dir: str | Path):
     catalog_path = Path(catalog_path)

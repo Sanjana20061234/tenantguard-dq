@@ -1,6 +1,7 @@
 import sqlglot
 from sqlglot import exp
 
+
 class SafeQuery:
     """
     A verified count-only SQL query.
@@ -22,7 +23,7 @@ def verify_and_create(sql: str, dialect: str = "duckdb") -> SafeQuery:
     """
     try:
         statements = sqlglot.parse(sql, read=dialect)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - sqlglot can throw multiple types of errors
         raise ValueError(f"SQL parsing error: {e}")
 
     if not statements or len(statements) != 1:
@@ -30,14 +31,14 @@ def verify_and_create(sql: str, dialect: str = "duckdb") -> SafeQuery:
 
     stmt = statements[0]
     if not isinstance(stmt, exp.Select):
-        raise ValueError("Query must be a SELECT statement.")
+        raise ValueError("Query must be a SELECT statement.")  # noqa: TRY004
 
     # Check for SELECT *
     for projection in stmt.expressions:
         if isinstance(projection, exp.Star):
-            raise ValueError("SELECT * is not allowed.")
+            raise ValueError("SELECT * is not allowed.")  # noqa: TRY004
         # Check if the projection is just a column without an aggregate
         if isinstance(projection, exp.Column):
-            raise ValueError("Bare columns in the outermost projection are not allowed. Use COUNT().")
+            raise ValueError("Bare columns in the outermost projection are not allowed. Use COUNT().")  # noqa: TRY004
 
     return SafeQuery(sql)

@@ -1,9 +1,12 @@
 import os
+
 import pytest
-from dq.runner import apply_policy, PipelineHaltError
-from dq.models import RunReport, CheckResult, Status
-from dq.report import write_json_report, write_markdown_report
+
 from dq.discovery import discover_checks
+from dq.models import CheckResult, RunReport, Status
+from dq.report import write_json_report, write_markdown_report
+from dq.runner import PipelineHaltError, apply_policy
+
 
 def test_canary_string_not_in_logs(tmp_path):
     report = RunReport(
@@ -74,5 +77,5 @@ def test_validator_rejects_bad_checks(tmp_path):
                 test_dir = tmp_path / f.replace('.yml', '')
                 test_dir.mkdir()
                 shutil.copy(os.path.join(bad_checks_dir, f), test_dir / f)
-                with pytest.raises(Exception):
+                with pytest.raises(ValueError):
                     discover_checks(str(test_dir))

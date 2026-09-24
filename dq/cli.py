@@ -1,15 +1,15 @@
-import typer
-from typing import Optional
-from pathlib import Path
 import sys
+from pathlib import Path
+
+import typer
 from rich.console import Console
 from rich.table import Table
 
 from dq.discovery import discover_checks
 from dq.engine import run_checks
-from dq.runner import apply_policy, PipelineHaltError
 from dq.guards import generate_guards
 from dq.report import write_json_report, write_markdown_report
+from dq.runner import PipelineHaltError, apply_policy
 
 app = typer.Typer()
 console = Console()
@@ -26,7 +26,7 @@ def validate(checks_dir: str):
     try:
         checks = discover_checks(checks_dir)
         console.print(f"[green]Successfully validated {len(checks)} table declarations.[/green]")
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - Catch broad exceptions to avoid unhandled crashes
         console.print(f"[red]Validation failed: {e}[/red]")
         sys.exit(2)
 
@@ -45,14 +45,14 @@ def run(
         from dq.adapters.duckdb_adapter import DuckDBAdapter
         try:
             adapter = DuckDBAdapter(data)
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 - Catch broad exceptions to avoid unhandled crashes
             console.print(f"[red]Failed to connect to DuckDB: {e}[/red]")
             sys.exit(3)
     elif backend == "clickhouse":
         from dq.adapters.clickhouse_adapter import ClickHouseAdapter
         try:
             adapter = ClickHouseAdapter()
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 - Catch broad exceptions to avoid unhandled crashes
             console.print(f"[red]Failed to connect to ClickHouse: {e}[/red]")
             sys.exit(3)
     else:
@@ -61,7 +61,7 @@ def run(
 
     try:
         declarations = discover_checks(checks)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - Catch broad exceptions to avoid unhandled crashes
         console.print(f"[red]Invalid config: {e}[/red]")
         sys.exit(2)
 
@@ -131,9 +131,9 @@ def demo(backend: str = "duckdb"):
     console.print(f"--- Running CORRUPT data on {backend} ---")
     try:
         run(backend=backend, data="fixtures/data/corrupt", checks="checks/", report_dir="reports/corrupt")
-    except typer.Exit as e:
+    except typer.Exit:
         pass
-    except SystemExit as e:
+    except SystemExit:
         pass
         
     console.print("\n[bold]Demo Summary:[/bold]")

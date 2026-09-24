@@ -2,6 +2,7 @@ from dq.checks import BaseCheck, register_check
 from dq.safesql import verify_and_create
 from dq.schema import RangeCheck
 
+
 @register_check("range_check")
 class RangeCheckImpl(BaseCheck):
     def build_sql(self, dialect: str):

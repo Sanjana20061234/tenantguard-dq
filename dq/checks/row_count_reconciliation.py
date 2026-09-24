@@ -1,8 +1,10 @@
 import json
 from pathlib import Path
+
 from dq.checks import BaseCheck, register_check
 from dq.safesql import verify_and_create
 from dq.schema import RowCountReconciliationCheck
+
 
 @register_check("row_count_reconciliation")
 class RowCountReconciliationCheckImpl(BaseCheck):

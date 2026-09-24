@@ -10,7 +10,7 @@ def _clickhouse_up() -> bool:
         client = clickhouse_connect.get_client(host="localhost", port=8123)
         client.command("SELECT 1")
         return True
-    except Exception:
+    except Exception:  # noqa: BLE001 - Connection probing
         return False
 
 

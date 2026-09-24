@@ -1,7 +1,10 @@
-import yaml
 from pathlib import Path
 from typing import Any
+
+import yaml
+
 from dq.schema import TableChecks
+
 
 def load_yaml(path: Path) -> Any:
     with open(path, "r") as f:
@@ -22,7 +25,7 @@ def discover_checks(checks_dir: str | Path) -> list[TableChecks]:
             # Validate via Pydantic
             table_checks = TableChecks.model_validate(data)
             discovered.append(table_checks)
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 - Wrap any pydantic error
             raise ValueError(f"Failed to parse {yaml_file}: {e}")
             
     return discovered

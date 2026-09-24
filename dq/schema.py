@@ -1,6 +1,9 @@
-from typing import Literal, Any
-from pydantic import BaseModel, Field
+from typing import Literal
+
+from pydantic import BaseModel
+
 from dq.models import Severity
+
 
 class CheckDeclaration(BaseModel, extra="forbid"):
     id: str

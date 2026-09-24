@@ -1,7 +1,10 @@
-import duckdb
 from pathlib import Path
+
+import duckdb
+
 from dq.adapters.base import DatabaseAdapter
 from dq.safesql import SafeQuery
+
 
 class DuckDBAdapter(DatabaseAdapter):
     """
@@ -33,7 +36,7 @@ class DuckDBAdapter(DatabaseAdapter):
             if result and result[0] is not None:
                 return int(result[0])
             return 0
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             # Mask driver specific errors to prevent data leakage
             raise RuntimeError(e.__class__.__name__)
 

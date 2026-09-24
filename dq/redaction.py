@@ -1,6 +1,7 @@
 import logging
 import re
 
+
 class RedactingFormatter(logging.Formatter):
     """
     Ensures that log outputs do not leak raw rows by only allowing 

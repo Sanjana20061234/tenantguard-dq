@@ -1,5 +1,6 @@
-import sys
 import subprocess
+import sys
+
 from rich.console import Console
 
 console = Console()
@@ -10,7 +11,7 @@ def main():
     
     console.print("[cyan]2. STAGE: DQ Gate[/cyan]")
     # Run the DQ check on corrupt data
-    result = subprocess.run(["dq", "run", "--backend", "duckdb", "--data", "fixtures/data/corrupt"])
+    result = subprocess.run(["dq", "run", "--backend", "duckdb", "--data", "fixtures/data/corrupt"], check=False)
     
     if result.returncode != 0:
         console.print("[bold red]PUBLISH SKIPPED (DQ gate failed)[/bold red]")

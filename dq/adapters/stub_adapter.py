@@ -1,11 +1,12 @@
 from dq.adapters.base import DatabaseAdapter
 from dq.safesql import SafeQuery
 
+
 class StubAdapter(DatabaseAdapter):
     """
     Adapter for unit tests that returns scripted counts without a database.
     """
-    def __init__(self, script: dict[str, int] = None):
+    def __init__(self, script: dict[str, int] | None = None):
         self._script = script or {}
         self._tables = {"organisations": ["organisation_id", "name"]}
 

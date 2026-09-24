@@ -1,7 +1,7 @@
+import argparse
 import csv
 import json
 import random
-import argparse
 from pathlib import Path
 
 # Seed for deterministic generation
@@ -174,8 +174,8 @@ def main():
     
     # Store manifest BEFORE corruptions (because row count reconciliation is expected vs clean manifest)
     manifest = {}
-    for t in data:
-        manifest[t] = len(data[t])
+    for t, val in data.items():
+        manifest[t] = len(val)
         
     out_dir = Path(f"fixtures/data/{args.mode}")
     

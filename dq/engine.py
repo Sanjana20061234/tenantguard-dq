@@ -1,7 +1,8 @@
-from dq.schema import TableChecks
-from dq.models import CheckResult, RunReport, Status
 from dq.adapters.base import DatabaseAdapter
 from dq.checks import get_check
+from dq.models import RunReport, Status
+from dq.schema import TableChecks
+
 
 def run_checks(checks: list[TableChecks], adapter: DatabaseAdapter) -> RunReport:
     results = []

@@ -1,6 +1,7 @@
-from dq.models import RunReport
-import json
 from pathlib import Path
+
+from dq.models import RunReport
+
 
 def write_json_report(report: RunReport, out_dir: str | Path):
     out_dir = Path(out_dir)

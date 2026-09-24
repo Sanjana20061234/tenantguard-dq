@@ -1,5 +1,6 @@
 from dq.models import RunReport
 
+
 class PipelineHaltError(Exception):
     pass
 

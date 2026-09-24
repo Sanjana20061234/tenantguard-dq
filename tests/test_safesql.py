@@ -1,12 +1,14 @@
 import pytest
+
 from dq.safesql import verify_and_create
+
 
 def test_safequery_valid():
     sq = verify_and_create("SELECT COUNT(*) FROM table WHERE col IS NULL")
     assert sq.sql == "SELECT COUNT(*) FROM table WHERE col IS NULL"
 
 def test_safequery_rejects_select_star():
-    with pytest.raises(ValueError, match="SELECT \* is not allowed"):
+    with pytest.raises(ValueError, match=r"SELECT \* is not allowed"):
         verify_and_create("SELECT * FROM table")
 
 def test_safequery_rejects_bare_columns():
