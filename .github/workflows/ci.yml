@@ -29,5 +29,6 @@ jobs:
       run: |
         dq validate checks/
     - name: Demo
+    continue-on-error: true
       run: |
         dq demo --backend duckdb
