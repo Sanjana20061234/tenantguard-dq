@@ -1,0 +1,9 @@
+version: 1
+table: fee_schedules
+checks:
+  - id: fee_schedules_bps_range
+    type: range_check
+    column: fee_rate_bps
+    min: 0
+    max: 500
+    severity: warning

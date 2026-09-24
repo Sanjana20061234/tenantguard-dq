@@ -1,0 +1,13 @@
+{
+  "organisations": 3,
+  "advisors": 18,
+  "clients": 75,
+  "accounts": 120,
+  "portfolios": 180,
+  "securities": 120,
+  "holdings": 900,
+  "trades": 1500,
+  "transactions": 6000,
+  "fee_schedules": 120,
+  "statements": 240
+}

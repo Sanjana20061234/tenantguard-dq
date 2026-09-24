@@ -42,19 +42,20 @@ def generate_guards(catalog_path: str | Path, output_dir: str | Path):
             })
             
         # 3. Cross-tenant check for each parent
-        parents = table_info.get("parents", {})
-        for parent_table, fk_col in parents.items():
-            if parent_table != "organisations":  # we don't cross-check against organisations table itself
-                checks.append({
-                    "id": f"{table_name}_{parent_table}_same_tenant",
-                    "type": "cross_tenant_check",
-                    "column": fk_col,
-                    "references": {
-                        "table": parent_table,
-                        "column": fk_col
-                    },
-                    "severity": "error"
-                })
+        parents = table_info.get("parents", [])
+        for p in parents:
+            parent_table = p['table']
+            fk_col = p['column']
+            checks.append({
+                "id": f"{table_name}_{parent_table}_same_tenant",
+                "type": "cross_tenant_check",
+                "column": fk_col,
+                "references": {
+                    "table": parent_table,
+                    "column": fk_col
+                },
+                "severity": "error"
+            })
                 
         # 4. Row count reconciliation
         checks.append({

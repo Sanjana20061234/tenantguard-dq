@@ -11,7 +11,8 @@ tables:
   users:
     business_keys: [org_id, user_id]
     parents:
-      organisations: org_id
+      - table: organisations
+        column: org_id
 ''')
 
     generate_guards(catalog, out_dir)

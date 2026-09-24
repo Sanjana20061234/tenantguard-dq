@@ -1,0 +1,41 @@
+# AUTO-GENERATED, DO NOT EDIT
+version: 1
+table: holdings
+checks:
+- id: holdings_org_not_null
+  type: null_check
+  columns:
+  - organisation_id
+  severity: error
+- id: holdings_unique_key
+  type: unique_key
+  columns:
+  - organisation_id
+  - holding_id
+  severity: error
+- id: holdings_organisations_same_tenant
+  type: cross_tenant_check
+  column: organisation_id
+  references:
+    table: organisations
+    column: organisation_id
+  severity: error
+- id: holdings_portfolios_same_tenant
+  type: cross_tenant_check
+  column: portfolio_id
+  references:
+    table: portfolios
+    column: portfolio_id
+  severity: error
+- id: holdings_securities_same_tenant
+  type: cross_tenant_check
+  column: security_id
+  references:
+    table: securities
+    column: security_id
+  severity: error
+- id: holdings_rowcount
+  type: row_count_reconciliation
+  expected_from: manifest
+  tolerance_pct: 0
+  severity: warning

@@ -1,0 +1,34 @@
+# AUTO-GENERATED, DO NOT EDIT
+version: 1
+table: clients
+checks:
+- id: clients_org_not_null
+  type: null_check
+  columns:
+  - organisation_id
+  severity: error
+- id: clients_unique_key
+  type: unique_key
+  columns:
+  - organisation_id
+  - client_id
+  severity: error
+- id: clients_organisations_same_tenant
+  type: cross_tenant_check
+  column: organisation_id
+  references:
+    table: organisations
+    column: organisation_id
+  severity: error
+- id: clients_advisors_same_tenant
+  type: cross_tenant_check
+  column: advisor_id
+  references:
+    table: advisors
+    column: advisor_id
+  severity: error
+- id: clients_rowcount
+  type: row_count_reconciliation
+  expected_from: manifest
+  tolerance_pct: 0
+  severity: warning

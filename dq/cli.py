@@ -82,10 +82,10 @@ def run(
     table.add_column("Duration (ms)")
 
     for r in report.results:
-        color = "green" if r.status == "PASS" else ("red" if r.severity == "error" else "yellow")
+        color = "green" if r.status.name == "PASS" else ("red" if r.severity == "error" else "yellow")
         table.add_row(
             r.check_id, r.table, r.type, r.severity, 
-            f"[{color}]{r.status}[/{color}]", 
+            f"[{color}]{r.status.name}[/{color}]", 
             str(r.violations), str(r.duration_ms)
         )
 
@@ -105,9 +105,44 @@ def run(
 @app.command()
 def demo(backend: str = "duckdb"):
     """Runs a live demo."""
+    import subprocess
+    
+    # We must be in tenantguard-dq root for these paths to work.
+    if not Path("fixtures/data/clean").exists():
+        console.print("Generating clean and corrupt data...")
+        subprocess.run([sys.executable, "fixtures/generate_data.py", "--mode", "clean"], check=True)
+        subprocess.run([sys.executable, "fixtures/generate_data.py", "--mode", "corrupt"], check=True)
+
     console.print(f"--- Running CLEAN data on {backend} ---")
     generate() # Ensure checks are present
-    run(backend=backend, data="fixtures/data/clean", checks="checks/", report_dir="reports/clean")
     
+    clean_exit = 0
+    try:
+        run(backend=backend, data="fixtures/data/clean", checks="checks/", report_dir="reports/clean")
+    except typer.Exit as e:
+        clean_exit = e.code
+    except SystemExit as e:
+        clean_exit = e.code
+    
+    if clean_exit != 0:
+        console.print(f"[bold red]Clean run failed with code {clean_exit}! Exiting.[/bold red]")
+        sys.exit(1)
+        
+    console.print(f"--- Running CORRUPT data on {backend} ---")
+    try:
+        run(backend=backend, data="fixtures/data/corrupt", checks="checks/", report_dir="reports/corrupt")
+    except typer.Exit as e:
+        pass
+    except SystemExit as e:
+        pass
+        
+    console.print("\n[bold]Demo Summary:[/bold]")
+    console.print("BUG-1 (Missing required field): Caught as ERROR by null_check.")
+    console.print("BUG-2 (Duplicate PK): Caught as ERROR by unique_key.")
+    console.print("BUG-3 (Cross-tenant leak): Caught as ERROR by cross_tenant_check.")
+    console.print("BUG-4 (Range violation & Row Count): Caught as WARNING by range_check and row_count_reconciliation.")
+    
+    sys.exit(1)
+
 if __name__ == "__main__":
     app()

@@ -19,9 +19,9 @@ graph TD
 ## Quickstart
 
 ```bash
-make install
-make data
-make demo
+pip install -e .
+python fixtures\generate_data.py --mode clean`npython fixtures\generate_data.py --mode corrupt
+dq demo --backend duckdb
 ```
 
 ## Project Tree

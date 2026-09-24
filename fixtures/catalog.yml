@@ -1,96 +1,126 @@
 tables:
   organisations:
     business_keys:
-      - organisation_id
+    - organisation_id
     parents: []
-    tags: [core]
-
+    tags:
+    - core
   advisors:
     business_keys:
-      - organisation_id
-      - advisor_id
+    - organisation_id
+    - advisor_id
     parents:
-      organisations: organisation_id
-    tags: [core, staff]
-
+    - table: organisations
+      column: organisation_id
+    tags:
+    - core
+    - staff
   clients:
     business_keys:
-      - organisation_id
-      - client_id
+    - organisation_id
+    - client_id
     parents:
-      organisations: organisation_id
-      advisors: advisor_id
-    tags: [core, customer]
-
+    - table: organisations
+      column: organisation_id
+    - table: advisors
+      column: advisor_id
+    tags:
+    - core
+    - customer
   accounts:
     business_keys:
-      - organisation_id
-      - account_id
+    - organisation_id
+    - account_id
     parents:
-      organisations: organisation_id
-      clients: client_id
-    tags: [core, customer, financial]
-
+    - table: organisations
+      column: organisation_id
+    - table: clients
+      column: client_id
+    tags:
+    - core
+    - customer
+    - financial
   portfolios:
     business_keys:
-      - organisation_id
-      - portfolio_id
+    - organisation_id
+    - portfolio_id
     parents:
-      organisations: organisation_id
-      accounts: account_id
-    tags: [core, financial]
-
+    - table: organisations
+      column: organisation_id
+    - table: accounts
+      column: account_id
+    tags:
+    - core
+    - financial
   securities:
     business_keys:
-      - organisation_id
-      - security_id
+    - organisation_id
+    - security_id
     parents:
-      organisations: organisation_id
-    tags: [reference]
-
+    - table: organisations
+      column: organisation_id
+    tags:
+    - reference
   holdings:
     business_keys:
-      - organisation_id
-      - holding_id
+    - organisation_id
+    - holding_id
     parents:
-      organisations: organisation_id
-      portfolios: portfolio_id
-      securities: security_id
-    tags: [financial, reporting]
-
+    - table: organisations
+      column: organisation_id
+    - table: portfolios
+      column: portfolio_id
+    - table: securities
+      column: security_id
+    tags:
+    - financial
+    - reporting
   trades:
     business_keys:
-      - organisation_id
-      - trade_id
+    - organisation_id
+    - trade_id
     parents:
-      organisations: organisation_id
-      portfolios: portfolio_id
-      securities: security_id
-    tags: [financial, transactional]
-
+    - table: organisations
+      column: organisation_id
+    - table: portfolios
+      column: portfolio_id
+    - table: securities
+      column: security_id
+    tags:
+    - financial
+    - transactional
   transactions:
     business_keys:
-      - organisation_id
-      - transaction_id
+    - organisation_id
+    - transaction_id
     parents:
-      organisations: organisation_id
-      accounts: account_id
-    tags: [financial, transactional]
-
+    - table: organisations
+      column: organisation_id
+    - table: accounts
+      column: account_id
+    tags:
+    - financial
+    - transactional
   fee_schedules:
     business_keys:
-      - organisation_id
-      - fee_schedule_id
+    - organisation_id
+    - fee_schedule_id
     parents:
-      organisations: organisation_id
-      accounts: account_id
-    tags: [financial, config]
-
+    - table: organisations
+      column: organisation_id
+    - table: accounts
+      column: account_id
+    tags:
+    - financial
+    - config
   statements:
     business_keys:
-      - organisation_id
-      - statement_id
+    - organisation_id
+    - statement_id
     parents:
-      organisations: organisation_id
-      accounts: account_id
-    tags: [reporting]
+    - table: organisations
+      column: organisation_id
+    - table: accounts
+      column: account_id
+    tags:
+    - reporting

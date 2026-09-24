@@ -1,0 +1,27 @@
+# AUTO-GENERATED, DO NOT EDIT
+version: 1
+table: securities
+checks:
+- id: securities_org_not_null
+  type: null_check
+  columns:
+  - organisation_id
+  severity: error
+- id: securities_unique_key
+  type: unique_key
+  columns:
+  - organisation_id
+  - security_id
+  severity: error
+- id: securities_organisations_same_tenant
+  type: cross_tenant_check
+  column: organisation_id
+  references:
+    table: organisations
+    column: organisation_id
+  severity: error
+- id: securities_rowcount
+  type: row_count_reconciliation
+  expected_from: manifest
+  tolerance_pct: 0
+  severity: warning
